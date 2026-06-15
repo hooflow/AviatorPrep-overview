@@ -75,12 +75,3 @@ LLM 생성물의 품질을 한 군데가 아니라 세 단계에서 막는다.
 Streamlit 서버사이드 앱이라 브라우저가 DB에 직접 붙지 않고 **서버가 모든 DB 접근을 중개**한다. 민감 작업은 Supabase의 `SECURITY DEFINER` RPC로 감싸고, 클라이언트가 넘기던 `user_id`·`limit` 같은 신뢰 불가 입력을 제거해 `auth.uid()` + 서버측 검증으로 대체했다. `anon` 역할의 mutation RPC 실행 권한은 `REVOKE`.
 
 이 "서버 중개" 원칙이 이후 프레임워크 선택(단순 SPA가 아니라 Next.js Server Actions)까지 좌우했다. 상세는 [01-build-journey.md](01-build-journey.md) §4~5.
-
----
-
-## 7. 의식적으로 받아들인 한계
-
-- 3072d 임베딩 → HNSW 인덱스 미사용 (정확도 우선)
-- ML 학습·fine-tuning 없음 — Gemini 호출 + 프롬프트 + RAG 조합
-- 품질 검증은 자동 패턴 스캔 + 샘플 인간 검수까지. 정식 평가셋(eval set) 미구축
-- 1인 audit 보안 — 외부 pentest 미실시
